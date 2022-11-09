@@ -3,7 +3,7 @@ import numpy as np
 import os
 import pickle
 
-def extract_features(image_path, vector_size=32):
+def readImage(image_path, vector_size=32):
     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     alg = cv2.KAZE_create()
     # Dinding image keypoints
@@ -25,28 +25,31 @@ def extract_features(image_path, vector_size=32):
         dsc = np.concatenate([dsc, np.zeros(needed_size - dsc.size)])
     return dsc
 
-def batch_extractor(images_path, pickled_db_path="features.npy"):
+def updateDatabase(images_path='test', database_path='test/database.pck'):
     files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
 
     result = {}
     for f in files:
-        print ('Extracting features from image %s' % f)
-        names = f.split('/')[-1].lower()
-        result[names] = extract_features('test\Adriana Lima0_0.jpg')
+        if (f != 'test\database.pck'):
+            print ('Membaca gambar %s' % f)
+            names = f.split('/')[-1].lower()
+            result[names] = readImage(f)
     
     # saving all our feature vectors in pickled file
-    with open(pickled_db_path, 'wb') as fp:
-        np.save(fp, result)
+    dbfile = open(database_path, 'ab')
+      
+    # source, destination
+    pickle.dump(result, dbfile)                     
+    dbfile.close()
 
-batch_extractor('test')
+    print('Semua gambar telah dimasukkan ke dalam database\n')
 
-with open('features.npy', 'rb') as f:
-    matrix = np.load(f, allow_pickle=True)
-print(matrix)
-matrix.names = []
-matrix.matrix = []
-for k, v in matrix.data.iteritems():
-    matrix.names.append(k)
-    matrix.matrix.append(v)
-matrix.matrix = np.array(matrix.matrix)
-matrix.names = np.array(matrix.names)
+def totalImage(images_path='test'):
+    files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
+
+    count = 0
+
+    for f in files:
+        count += 1
+    
+    return count-1
