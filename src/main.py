@@ -2,6 +2,7 @@ import numpy as np
 import pickle
 
 import initialization
+import covareigen
 
 # Memasukkan semua gambar yang telah dikonversi ke matriks ke dalam database (test/database.pck)
 initialization.updateDatabase()
@@ -24,3 +25,8 @@ db = pickle.load(dbfile)
 for matrix in db:
     print(matrix, '=>', db[matrix])
 dbfile.close()
+
+# Membuat matriks kovarians dari database
+covmat = covareigen.covariance(db)
+print('\nMatriks Kovarians')
+print(covmat)
