@@ -49,8 +49,12 @@ In terminal:
 
 ## Usage
 Method 1:
-  1. Make sure the directory in the terminal is on '.\Algeo02-21058\'
+  1. Make sure the directory on the terminal is in '.\Algeo02-21058\'
   2. Run main.py inside src folder using vscode extension
+
+Method 2:
+  1. Make sure the directory on the terminal is in '.\Algeo02-21058\'
+  2. py src/main.py
 
 
 ## Project Status
