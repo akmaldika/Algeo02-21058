@@ -61,6 +61,7 @@ def totalImage(images_path='test'):
     count = 0
 
     for f in files:
-        count += 1
+        if (f != 'test\database.pck') and (f != 'test\databaseSelisih.pck'):
+            count += 1
     
-    return count-1
+    return count

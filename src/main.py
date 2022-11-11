@@ -25,9 +25,9 @@ dbfile = open('test/databaseSelisih.pck', 'rb')
 db = pickle.load(dbfile)
 for matrix in db:
     print(matrix, '=>', db[matrix])
-dbfile.close()
 
 # Membuat matriks kovarians dari database
 covmat = covareigen.covariance(db)
 print('\nMatriks Kovarian')
 print(covmat)
+dbfile.close()
