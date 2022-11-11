@@ -2,13 +2,14 @@ import numpy as np
 import pickle
 
 import initialization
+import selisih
 import covareigen
 
 # Memasukkan semua gambar yang telah dikonversi ke matriks ke dalam database (test/database.pck)
 initialization.updateDatabase()
 
 # Menghitung selisih matriks dengan mean lalu dimasukkan ke dalam database baru (test/databaseSelisih.pck)
-initialization.selisih()
+selisih.selisih()
 
 # Test display database (Untuk test aja, bisa dihapus kalo udah ok)
 print('Database')
@@ -28,5 +29,5 @@ dbfile.close()
 
 # Membuat matriks kovarians dari database
 covmat = covareigen.covariance(db)
-print('\nMatriks Kovarians')
+print('\nMatriks Kovarian')
 print(covmat)
