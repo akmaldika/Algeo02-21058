@@ -1,10 +1,12 @@
 import numpy as np
+import os
 
 import initialization
 
 def covariance(db):
     # menyusun matriks AT (transpose A) berdasarkan vektor-vektor database
-    vector = initialization.readImage('test\Adriana Lima (1).jpg')
+    files = [os.path.join('test', p) for p in sorted(os.listdir('test'))]
+    vector = initialization.readImage(files[0])
 
     row = initialization.totalImage()
     col = len(vector)
