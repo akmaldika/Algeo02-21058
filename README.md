@@ -38,14 +38,15 @@ List the ready features here:
 
 ## Setup
 Prerequirement:
-1. Python :https://www.python.org/downloads/
-2. Pip    :https://pip.pypa.io/en/stable/installation/
+1. Python:https://www.python.org/downloads/
+2. Pip:https://pip.pypa.io/en/stable/installation/
 
 Requirement:
 In terminal:
-  1. pip install numpy
-  2. pip install opencv-python
-
+  ``` powerShell
+  pip install numpy
+  pip install opencv-python
+  ```
 
 ## Usage
 Method 1:
@@ -58,7 +59,7 @@ Method 2:
 
 
 ## Project Status
-Project is: _in progress_ 
+Project is: <span style = "color : yellow" >_in progres_ </span>
 
 
 ## Room for Improvement
@@ -69,5 +70,11 @@ Room for improvement:
 - Improvement to be done 2
 
 To do:
-- Feature to be added 1
-- Feature to be added 2
+- [x] function scanning image to matrix
+- [x] function calculate mean of all matrix
+- [x] function calculate differenc between training image and mean
+- [] function calculate value of covarian matrix
+- [] function calculate eigen value and eigen vector
+- [] function calculate value of Eigenface
+- [] function calculate new face image
+
