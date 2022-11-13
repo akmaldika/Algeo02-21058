@@ -39,6 +39,8 @@ def updateDatabase():
     Fungsi untuk memasukkan semua matriks gambar ke dalam database.
     """
 
+    print('Updating Database...')
+
     images_path='test'
     database_path='test/database.pck'
 
@@ -47,7 +49,6 @@ def updateDatabase():
     result = {}
     for f in files:
         if (f != 'test\database.pck') and (f != 'test\databaseSelisih.pck'):
-            print ('Membaca gambar %s' % f)
             names = f.split('/')[-1].lower()
             result[names] = readImage(f)
     
