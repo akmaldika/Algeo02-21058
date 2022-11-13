@@ -31,3 +31,8 @@ covmat = covareigen.covariance(db)
 print('\nMatriks Kovarian')
 print(covmat)
 dbfile.close()
+
+# Membuat matriks vektor-vektor eigen
+eigenvector, eigenvalue = covareigen.eigen(covmat)
+print('\nMatriks Vektor Eigen')
+print(eigenvector)
