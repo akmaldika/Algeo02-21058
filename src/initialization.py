@@ -3,11 +3,16 @@ import numpy as np
 import os
 import pickle
 
-"""
-Fungsi untuk membaca gambar dengan input paramater path.
-Mengembalikan matriks dari gambar.
-"""
-def readImage(image_path, vector_size=32):
+def readImage(image_path):
+    """
+    Fungsi untuk membaca gambar dengan input paramater path.
+    Mengembalikan matriks dari gambar.
+
+    args:
+        image_path: string berupa relative path dari folder gambar
+    """
+
+    vector_size=32
     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     alg = cv2.KAZE_create()
     # Dinding image keypoints
@@ -29,10 +34,14 @@ def readImage(image_path, vector_size=32):
         dsc = np.concatenate([dsc, np.zeros(needed_size - dsc.size)])
     return dsc
 
-"""
-Fungsi untuk memasukkan semua matriks gambar ke dalam database.
-"""
-def updateDatabase(images_path='test', database_path='test/database.pck'):
+def updateDatabase():
+    """
+    Fungsi untuk memasukkan semua matriks gambar ke dalam database.
+    """
+
+    images_path='test'
+    database_path='test/database.pck'
+
     files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
 
     result = {}
@@ -52,10 +61,13 @@ def updateDatabase(images_path='test', database_path='test/database.pck'):
 
     print('Semua gambar telah dimasukkan ke dalam database (test/database.pck)\n')
 
-"""
-Fungsi untuk menghitung total gambar yang ada di test folder.
-"""
-def totalImage(images_path='test'):
+def totalImage():
+    """
+    Fungsi untuk menghitung total gambar yang ada di test folder.
+    """
+
+    images_path='test'
+
     files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
 
     count = 0

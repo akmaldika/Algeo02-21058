@@ -2,11 +2,14 @@ import pickle
 import numpy as np
 from initialization import totalImage
 
-"""
-Fungsi untuk mencari matriks mean dari database.
-Mengembalikan result berupa matriks mean.
-"""
-def mean(database_path='test/database.pck'):
+def mean():
+    """
+    Fungsi untuk mencari matriks mean dari database.
+    Mengembalikan result berupa matriks mean.
+    """
+    
+    database_path='test/database.pck'
+    
     dbfile = open(database_path, 'rb')     
     db = pickle.load(dbfile)
     result = [0] * 2048

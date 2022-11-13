@@ -3,11 +3,15 @@ import os
 import numpy as np
 from mean import mean
 
-"""
-Fungsi untuk mencari matriks selisih antara matriks database dengan mean.
-Lalu matriks selisih dimasukkan ke dalam database baru yaitu databaseSelisih.
-"""
-def selisih(database_path='test/database.pck', database_selisih_path='test/databaseSelisih.pck'):
+def selisih():
+    """
+    Fungsi untuk mencari matriks selisih antara matriks database dengan mean.
+    Lalu matriks selisih dimasukkan ke dalam database baru yaitu databaseSelisih.
+    """
+    
+    database_path='test/database.pck'
+    database_selisih_path='test/databaseSelisih.pck'
+
     dbfile = open(database_path, 'rb')     
     db = pickle.load(dbfile)
     result = {}
