@@ -73,8 +73,8 @@ To do:
 - [x] function scanning image to matrix
 - [x] function calculate mean of all matrix
 - [x] function calculate differenc between training image and mean
-- [] function calculate value of covarian matrix
-- [] function calculate eigen value and eigen vector
-- [] function calculate value of Eigenface
-- [] function calculate new face image
+- [ ] function calculate value of covarian matrix
+- [ ] function calculate eigen value and eigen vector
+- [ ] function calculate value of Eigenface
+- [ ] function calculate new face image
 

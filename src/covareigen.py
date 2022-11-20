@@ -8,6 +8,7 @@ def covariance(db):
     # menyusun matriks AT (transpose A) berdasarkan vektor-vektor database
     files = [os.path.join('test', p) for p in sorted(os.listdir('test'))]
     vector = initialization.readImage(files[0])
+    
 
     row = initialization.totalImage()
     col = len(vector)
