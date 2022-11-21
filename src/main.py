@@ -12,12 +12,12 @@ from tkinter import messagebox
 from tkinter import filedialog
 from PIL import ImageTk, Image
 
-from covariance import getCovariance
-from eigen import getEigen, CalculateEigenface
-from identification import *
 from initialization import *
 from mean import *
 from selisih import *
+from covariance import *
+from eigen import *
+from identification import *
 from video import VideoCapture
 
 # ---- Inisialisasi Tkinter ---- #
