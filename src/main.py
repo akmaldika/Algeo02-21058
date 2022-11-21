@@ -12,8 +12,8 @@ from tkinter import messagebox
 from tkinter import filedialog
 from PIL import ImageTk, Image
 
-from covareigen import *
-from eigen import *
+from covariance import getCovariance
+from eigen import getEigen, CalculateEigenface
 from identification import *
 from initialization import *
 from mean import *
@@ -313,8 +313,9 @@ def start():
         saved_totalImage = totalImage(pathdataset)
         updateDatabase(pathdataset)
         selisih(pathdataset)
-        covmat = covariance(pathdataset)
-        eigenvector, eigenvalue = eigen(covmat)
+        covmat, diffmat = getCovariance(pathdataset)
+        eigenvector, eigenvalue = getEigen(covmat, diffmat)
+        print(eigenvector)
         db_updated = True
 
     processing = False
