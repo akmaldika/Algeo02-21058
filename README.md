@@ -10,29 +10,31 @@
 * [Usage](#usage)
 * [Project Status](#project-status)
 * [Room for Improvement](#room-for-improvement)
+* [To Do](#to-do)
 
 
 ## General Information
 - The goal of this project is to implement a web or GUI that can recognize someone's face by comparing it with similar images inside the program database/dataset. 
-- The SVD were calculated without any help from libraries that could calculate eigenvalues/ eigenvectors/ svd directly. 
-- Students were asked to implement what they got in class by making their own code to calculate eigenvaluses, eigenvectors, and svd.
+- The eigenface were calculated without any help from libraries that could calculate eigenvalues/ eigenvectors directly. 
+- Students were asked to implement what they got in class by making their own code to calculate eigenvaluses, and eigenvectors.
 
 
 ## Technologies Used
 - Python 3.11.0
 - numpy 1.23.4
 - OpenCV 4.6.0
+- Pillow 9.3.0
+- Tkinter 8.6
 
 
 ## Features
 List the ready features here:
-- Awesome feature 1
-- Awesome feature 2
-- Awesome feature 3
+- Face recognition from image
+- Face recognition using camera
 
 
 ## Screenshots
-![Example screenshot](./img/screenshot.png)
+![Example screenshot](screenshot.png)
 <!-- If you have screenshots you'd like to share, include them here. -->
 
 
@@ -41,12 +43,14 @@ Prerequirement:
 1. Python:https://www.python.org/downloads/
 2. Pip:https://pip.pypa.io/en/stable/installation/
 
-Requirement:
 In terminal:
   ``` powerShell
   pip install numpy
   pip install opencv-python
+  pip install tk
+  pip install Pillow
   ```
+
 
 ## Usage
 Method 1:
@@ -63,18 +67,19 @@ Project is: <span style = "color : yellow" >_in progres_ </span>
 
 
 ## Room for Improvement
-Include areas you believe need improvement / could be improved. Also add TODOs for future development.
-
 Room for improvement:
-- Improvement to be done 1
-- Improvement to be done 2
+- Long loading time while updating database
 
+
+## To Do
 To do:
 - [x] function scanning image to matrix
 - [x] function calculate mean of all matrix
-- [x] function calculate differenc between training image and mean
-- [ ] function calculate value of covarian matrix
-- [ ] function calculate eigen value and eigen vector
-- [ ] function calculate value of Eigenface
-- [ ] function calculate new face image
-
+- [x] function calculate difference between training image and mean
+- [x] function calculate value of covarian matrix
+- [x] function calculate eigen value and eigen vector
+- [x] function calculate value of Eigenface
+- [x] function calculate new face image
+- [x] Identification function
+- [x] GUI
+- [x] Implement the program to GUI
