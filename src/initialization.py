@@ -34,23 +34,21 @@ def readImage(image_path):
         dsc = np.concatenate([dsc, np.zeros(needed_size - dsc.size)])
     return dsc
 
-def updateDatabase():
+def updateDatabase(images_path):
     """
     Fungsi untuk memasukkan semua matriks gambar ke dalam database.
     """
 
-    print('Updating Database...')
+    print('Updating Database...\n')
 
-    images_path='test'
-    database_path='test/database.pck'
+    database_path='src/Database/database.pck'
 
     files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
 
     result = {}
     for f in files:
-        if (f != 'test\database.pck') and (f != 'test\databaseSelisih.pck'):
-            names = f.split('/')[-1].lower()
-            result[names] = readImage(f)
+        names = f.split('/')[-1].lower()
+        result[names] = readImage(f)
     
     if os.path.exists(database_path):
         os.remove(database_path)
@@ -60,21 +58,20 @@ def updateDatabase():
     pickle.dump(result, dbfile)                 
     dbfile.close()
 
-    print('Semua gambar telah dimasukkan ke dalam database (test/database.pck)\n')
+    print('Semua gambar telah dimasukkan ke dalam database (src/Database/database.pck)\n')
 
-def totalImage():
+    return
+
+def totalImage(images_path):
     """
     Fungsi untuk menghitung total gambar yang ada di test folder.
     """
-
-    images_path='test'
 
     files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
 
     count = 0
 
     for f in files:
-        if (f != 'test\database.pck') and (f != 'test\databaseSelisih.pck'):
-            count += 1
+        count += 1
     
     return count

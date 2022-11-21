@@ -1,19 +1,22 @@
 import numpy as np
 import math
 import os
+import pickle
 
 import initialization
 
-def covariance(db):
+def covariance(images_path):
     # menyusun matriks AT (transpose A) berdasarkan vektor-vektor database
-    files = [os.path.join('test', p) for p in sorted(os.listdir('test'))]
+    files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
     vector = initialization.readImage(files[0])
-    
 
-    row = initialization.totalImage()
+    row = initialization.totalImage(images_path)
     col = len(vector)
     AT = np.zeros((row,col))
     
+    dbfile = open('src/Database/databaseSelisih.pck', 'rb') 
+    db = pickle.load(dbfile)
+
     i = 0
     for vectors in db:
         for j in range(col):
@@ -27,6 +30,8 @@ def covariance(db):
             A[i][j] = AT[j][i]
     # menyusun matriks kovarians dengan C = AT*A
     C = np.dot(AT, A)
+
+    dbfile.close()
 
     return C
 

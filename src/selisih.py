@@ -3,21 +3,21 @@ import os
 import numpy as np
 from mean import mean
 
-def selisih():
+def selisih(images_path):
     """
     Fungsi untuk mencari matriks selisih antara matriks database dengan mean.
     Lalu matriks selisih dimasukkan ke dalam database baru yaitu databaseSelisih.
     """
     
-    database_path='test/database.pck'
-    database_selisih_path='test/databaseSelisih.pck'
+    database_path='src/Database/database.pck'
+    database_selisih_path='src/Database/databaseSelisih.pck'
 
     dbfile = open(database_path, 'rb')     
     db = pickle.load(dbfile)
     result = {}
     for matrix in db:
         names = matrix
-        result[names] = np.subtract(db[matrix], mean())
+        result[names] = np.subtract(db[matrix], mean(images_path))
     dbfile.close()
 
     if os.path.exists(database_selisih_path):
@@ -28,4 +28,4 @@ def selisih():
     pickle.dump(result, dbfile)                  
     dbfile.close()
 
-    print('Database selisih berhasil dibuat (test/databaseSelisih.pck)\n')
+    print('Database selisih berhasil dibuat (src/Database/databaseSelisih.pck)\n')
