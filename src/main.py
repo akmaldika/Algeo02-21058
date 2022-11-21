@@ -11,9 +11,21 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import filedialog
 from PIL import ImageTk, Image
+<<<<<<< Updated upstream
 
 from covareigen import *
 from eigen import *
+=======
+<<<<<<< HEAD
+import selisih
+from covariance import getCovariance
+from eigen import getEigen
+=======
+
+from covareigen import *
+from eigen import *
+>>>>>>> dd5ebe6885e4b9d6be287037d2c2b86a98854043
+>>>>>>> Stashed changes
 from identification import *
 from initialization import *
 from mean import *
@@ -313,8 +325,18 @@ def start():
         saved_totalImage = totalImage(pathdataset)
         updateDatabase(pathdataset)
         selisih(pathdataset)
+<<<<<<< Updated upstream
         covmat = covariance(pathdataset)
         eigenvector, eigenvalue = eigen(covmat)
+=======
+<<<<<<< HEAD
+        covMat, diffMat = getCovariance(pathdataset)
+        eigenVector, eigenValue = getEigen(covMat, diffMat)
+=======
+        covmat = covariance(pathdataset)
+        eigenvector, eigenvalue = eigen(covmat)
+>>>>>>> dd5ebe6885e4b9d6be287037d2c2b86a98854043
+>>>>>>> Stashed changes
         db_updated = True
 
     processing = False
@@ -328,4 +350,36 @@ def close():
 
 window.resizable(False, False)
 window.protocol("WM_DELETE_WINDOW", close)
+<<<<<<< Updated upstream
 window.mainloop()
+=======
+<<<<<<< HEAD
+window.mainloop()
+
+# Membuat matriks selisih dan matriks kovarian dari database
+# covMat, diffMat = getCovariance(db)
+# print('\nMatriks Kovarian')
+# print(covMat)
+# print('Ukuran Matriks Kovarian', len(covMat), 'x', len(covMat[0]))
+# dbfile.close()
+
+# Membuat matriks vektor-vektor eigen
+# eigenVector, eigenValue = getEigen(diffMat, covMat)
+# print("\nVektor Nilai Eigen")
+# print(eigenValue)
+# print("Ukuran Vektor Nilai Eigen", len(eigenValue))
+# print('\nMatriks Vektor Eigen')
+# print(eigenVector)
+# print('Ukuran Matriks Vektor Eigen', len(eigenVector), 'x', len(eigenVector[0]))
+
+# Test display databaseEigenface (Untuk test aja, bisa dihapus kalo udah ok)
+# print('\nDatabase Eigenface')
+# dbfile = open('test/databaseEigenface.pck', 'rb')
+# db = pickle.load(dbfile)
+# for matrix in db:
+#     print(matrix, '=>', db[matrix])
+# dbfile.close()
+=======
+window.mainloop()
+>>>>>>> dd5ebe6885e4b9d6be287037d2c2b86a98854043
+>>>>>>> Stashed changes
