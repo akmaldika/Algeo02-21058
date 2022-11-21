@@ -1,5 +1,6 @@
-import pickle
 import numpy as np
+import pickle
+
 from initialization import totalImage
 
 def mean(images_path):

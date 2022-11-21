@@ -1,7 +1,7 @@
-import cv2
 import numpy as np
-import os
 import pickle
+import cv2
+import os
 
 def readImage(image_path):
     """

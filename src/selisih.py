@@ -1,6 +1,7 @@
+import numpy as np
 import pickle
 import os
-import numpy as np
+
 from mean import mean
 
 def selisih(images_path):
