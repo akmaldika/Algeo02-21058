@@ -58,7 +58,7 @@ def updateDatabase(images_path):
     pickle.dump(result, dbfile)                 
     dbfile.close()
 
-    print('Semua gambar telah dimasukkan ke dalam database (src/Database/database.pck)\n')
+    print('Database berhasil dibuat (src/Database/database.pck)\n')
 
     return
 
