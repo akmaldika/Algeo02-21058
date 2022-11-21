@@ -67,10 +67,10 @@ def CalculateEigenface(eigenvector):
     hasil = {}
     for value in db:
         key = value
-        hasil[key] = np.matmul(eigenvector, db[value])
+        hasil[key] = np.matmul(db[value], eigenvector)
     dbfile.close()
 
-    if os.path.exists(database_eigenface_path, 'ab'):
+    if os.path.exists(database_eigenface_path):
         os.remove(database_eigenface_path)
         
     dbfile = open(database_eigenface_path, 'ab')
