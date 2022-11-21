@@ -8,6 +8,8 @@ import threading
 import base64
 import math
 from tkinter import *
+from tkinter import messagebox
+from tkinter import filedialog
 from PIL import ImageTk, Image
 
 from covareigen import *
@@ -46,7 +48,7 @@ background = canvas.create_image(
 # ---- Button Choose Dataset ---- #
 choosedataset_img = PhotoImage(file = 'src/UI/Button1.png')
 choosedataset_button = Button(
-    # command = lambda: select_dataset(),
+    command = lambda: select_dataset(),
     image = choosedataset_img,
     borderwidth = 0,
     highlightthickness = 0,
@@ -60,7 +62,7 @@ choosedataset_button.place(
 # ---- Button Choose Image ---- #
 chooseimage_img = PhotoImage(file = 'src/UI/Button1.png')
 chooseimage_button = Button(
-    # command=lambda: select_image(),
+    command = lambda: select_image(),
     image = chooseimage_img,
     borderwidth = 0,
     highlightthickness = 0,
@@ -74,7 +76,7 @@ chooseimage_button.place(
 # ---- Button Start ---- #
 start_img = PhotoImage(file = 'src/UI/Button2.png')
 start_button = Button(
-    # command=lambda: start_thread(),
+    command = lambda: start_process(),
     image = start_img,
     borderwidth = 0,
     highlightthickness = 0,
@@ -170,7 +172,7 @@ time_label = Label(
 time_label.bind('<Button-1>', lambda e: 'break')
 
 time_label.place(
-    x = 410.0, y = 475.0,
+    x = 410.0, y = 473.0,
     width = 150.0,
     height = 50)
 
@@ -184,14 +186,14 @@ status_label = Label(
     bd = 0,
     bg = "#5878e5",
     highlightthickness = 0,
-    font = ('Montserrat 20 bold'),
+    font = ('Montserrat 15 bold'),
     fg = '#ffffff',
     justify = 'center')
 
 status_label.bind('<Button-1>', lambda e: 'break')
 
 status_label.place(
-    x = 745.0, y = 528.5,
+    x = 745.0, y = 526.5,
     width = 150.0,
     height = 50)
 
@@ -228,6 +230,102 @@ left_img_label.image = left_img_bg
 
 canvas.pack()
 
-# window.protocol("WM_DELETE_WINDOW", on_window_close)
+# ---- Inisialisasi ---- #
+processing = False
+processing_video = False
+db_updated = False
+
+saved_pathdataset = None
+saved_totalImage = None
+pathdataset = None
+imageInput = None
+
+# ---- Fungsi Utama ---- #
+def select_dataset():
+    if processing or processing_video:
+        return
+        
+    global pathdataset
+
+    pathdataset = filedialog.askdirectory()
+
+    if (len(pathdataset) != 0):
+        current = entry_dataset.get()
+        entry_dataset.delete(0, END)
+        entry_dataset.insert(0, os.path.basename(pathdataset))
+    else:
+        check_entry()
+
+def select_image():
+    if processing or processing_video:
+        return
+
+    global image, imageInput
+
+    path = filedialog.askopenfilename()
+
+    current = entry_image.get()
+    entry_image.delete(0, END)
+    entry_image.insert(0, os.path.basename(path))
+
+    if len(path) > 0:
+        imageInput = readImage(path)
+
+        image = Image.open(path)
+
+        resized_image = image.resize((276, 276), Image.Resampling.LANCZOS)
+
+        image = ImageTk.PhotoImage(resized_image)
+
+        left_img_label.configure(image = image)
+        left_img_label.image = image
+    else:
+        check_entry()
+
+def update_status(status):
+    status_label.config(text=status)
+
+def stopwatch():
+    start = time.time()
+    while processing:
+        time_label.config(text=f"{(time.time() - start):.2f}s")
+
+def start_process():
+    global processing
+    if processing or processing_video:
+        return
+    if pathdataset is None or imageInput is None:
+        messagebox.showerror("Error", "Please select dataset and image")
+        return
+    processing = True
+    threading.Thread(target=start, daemon=True).start()
+    threading.Thread(target=stopwatch, daemon=True).start()
+    update_status('Processing')
+
+def start():
+    global processing, saved_pathdataset, saved_totalImage, db_updated
+
+    if ((pathdataset != saved_pathdataset) and (saved_totalImage != totalImage(pathdataset))):
+        db_updated = False
+
+    if not db_updated:
+        saved_pathdataset = pathdataset
+        saved_totalImage = totalImage(pathdataset)
+        updateDatabase(pathdataset)
+        selisih(pathdataset)
+        covmat = covariance(pathdataset)
+        eigenvector, eigenvalue = eigen(covmat)
+        db_updated = True
+
+    processing = False
+    update_status('Done')
+
+def close():
+    global processing_video
+    processing_video = False
+    window.destroy()
+    sys.exit()
+
 window.resizable(False, False)
+window.protocol("WM_DELETE_WINDOW", close)
 window.mainloop()
