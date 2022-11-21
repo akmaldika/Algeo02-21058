@@ -1,6 +1,7 @@
 # Face Recognition with Eigenface
 > Tugas Besar 2 IF 2123 Aljabar Linier dan Geometri Aplikasi Nilai Eigen dan EigenFace pada Pengenalan Wajah (Face Recognition) Semester I Tahun 2022/2023
 
+
 ## Table of Contents
 * [General Info](#general-information)
 * [Technologies Used](#technologies-used)
@@ -63,7 +64,7 @@ Method 2:
 
 
 ## Project Status
-Project is: <span style = "color : yellow" >_in progres_ </span>
+Project is: <span style = "color : yellow" >_in progress_ </span>
 
 
 ## Room for Improvement
