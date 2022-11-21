@@ -34,7 +34,7 @@ from video import VideoCapture
 
 # ---- Inisialisasi Tkinter ---- #
 window = Tk()
-window.title('Face Recognition')
+window.title('Face Recognition by Face-X')
 icon = PhotoImage(file = 'src/UI/Icon.png')
 window.tk.call('wm', 'iconphoto', window._w, icon)
 
