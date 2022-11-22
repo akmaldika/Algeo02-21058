@@ -17,9 +17,10 @@ def getNewEigenface(image_input, image_path, eigenvector):
         for i in range(len(hasil)):
             sum += numpy.power(hasil[i], 2)
         distance = numpy.sqrt(sum)
-        if distance < min:
+        if (distance < min):
             min = distance
-            name = value
+            if (distance < 10):
+                name = value
             
     dbfile.close()
 
