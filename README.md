@@ -35,8 +35,8 @@ List the ready features here:
 
 
 ## Screenshots
-![Example screenshot](screenshot.png)
-<!-- If you have screenshots you'd like to share, include them here. -->
+![GUI](screenshot.png)
+![Camera Feature](screenshot2.png)
 
 
 ## Setup
