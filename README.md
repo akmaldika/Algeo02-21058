@@ -64,7 +64,7 @@ Method 2:
 
 
 ## Project Status
-Project is: <span style = "color : yellow" >_in progress_ </span>
+Project is: <span style = "color : yellow" >_no longer being worked on_ </span>
 
 
 ## Room for Improvement
