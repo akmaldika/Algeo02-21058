@@ -72,13 +72,13 @@ def getEigen(covmat, diffmat):
     eigenvector = eigenvector[:, i]
     return eigenvector
 
-# def pickEigen(eigenvector):
-#     row = len(eigenvector)
-#     newCol = np.floor_divide(len(eigenvector), 2)
-#     neweigenvector = np.zeros((row,newCol))
-#     for i in range(newCol):
-#         neweigenvector[:,i] = eigenvector[:,i]
-#     return neweigenvector
+def pickEigen(eigenvector):
+    row = len(eigenvector)
+    newCol = np.floor_divide(len(eigenvector), 2)
+    neweigenvector = np.zeros((row,newCol))
+    for i in range(newCol):
+        neweigenvector[:,i] = eigenvector[:,i]
+    return neweigenvector
 
 def CalculateEigenface(eigenvector):
     """ melakukan penyimpanan nilai eigen face kedalam databse menggunakan fungsi eigen vector
