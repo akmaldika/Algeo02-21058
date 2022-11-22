@@ -13,7 +13,7 @@ def mean(images_path):
     
     dbfile = open(database_path, 'rb')     
     db = pickle.load(dbfile)
-    result = [0] * 2048
+    result = np.zeros(2048)
     for matrix in db:
         result = np.add(db[matrix], result)
     result = np.true_divide(result, totalImage(images_path))
