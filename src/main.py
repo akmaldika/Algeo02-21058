@@ -369,12 +369,13 @@ def start_process():
 def stop_video():
     global processing_video, imageInput
     processing_video = False
-    left_img_label.config(image = left_img_bg)
-    left_img_label.image = left_img_bg
     video_capture.stop()
     startstop_button.config(
         command = lambda: threading.Thread(
         target = start_video, daemon = True).start(), image = startvideo_img)
+    left_img_bg = PhotoImage(file = 'src/UI/ImageBackground.png')
+    left_img_label.config(image = left_img_bg)
+    left_img_label.image = left_img_bg
     imageInput = None
     update_status('')
     result_label.config(text = '')
