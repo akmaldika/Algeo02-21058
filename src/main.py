@@ -308,7 +308,8 @@ def update_dataset():
         updateDatabase(pathdataset)
         selisih(pathdataset)
         covmat, diffmat = getCovariance(pathdataset)
-        eigenvector, eigenvalue = getEigen(covmat, diffmat)
+        eigenvector = getEigen(covmat, diffmat)
+        # besteigenvector = pickEigen(eigenvector)
         CalculateEigenface(eigenvector)
         db_updated = True
         update_status('Updated')

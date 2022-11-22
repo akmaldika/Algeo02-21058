@@ -3,29 +3,26 @@ import pickle
 import math
 import os
 
-from covariance import getCovariance
-
-def getEigen(covmat, diffmat):
+def getQR(matrix):
     # inisialisi ukuran matriks vektor-vektor eigen
-    size = len(covmat)
+    size = len(matrix)
     # matriks Q menyimpan vektor-vektor eigen pada kolom-kolom matriks Q
     Q = np.zeros((size,size))
+    R = np.zeros((size,size))
     # membuat vektor U, proj1, proj2, minProj untuk mempermudah perhitungan
     U = np.zeros(size)
     proj1 = np.zeros(size)
     proj2 = np.zeros(size)
     minProj = np.zeros(size)
-    # menyimpan nilai-nilai eigen dari hasil perhitungan
-    eigenvalue = np.zeros(size)
 
     # kolom pemrosesan utama
     for mainCol in range(size):
         # inisialisasi panjang vektor U = 0
         dU = 0
-        # inisialisasi vektor U dan proj1 sebagai vektor kolom ke-mainCol dari matriks covmat
+        # inisialisasi vektor U dan proj1 sebagai vektor kolom ke-mainCol dari matriks
         for initRow in range(size):
-            U[initRow] = covmat[initRow][mainCol]
-            proj1[initRow] = covmat[initRow][mainCol]
+            U[initRow] = matrix[initRow][mainCol]
+            proj1[initRow] = matrix[initRow][mainCol]
         # baris pemrosesan utama
         for procRow in range(size):
             if (mainCol > 0):
@@ -39,6 +36,7 @@ def getEigen(covmat, diffmat):
                         dProj2 += proj2[initRow]*proj2[initRow]
                     # assign nilai projeksi vektor proj1 pada vektor proj2
                     koefProj = np.dot(proj1,proj2) / dProj2
+                    R[projCol][mainCol] = koefProj
                     # assign nilai pengurang vektor U
                     minProj[procRow] += koefProj*proj2[procRow]
                 # mengurangi vektor U dengan minProj
@@ -49,12 +47,38 @@ def getEigen(covmat, diffmat):
             dU += U[procRow]*U[procRow]
         dU = math.sqrt(dU)
         # assign nilai eigen = dU (panjang vektor U)
-        eigenvalue[mainCol] = dU
+        R[mainCol][mainCol] = dU
         # assign nilai elemen matriks Q adalah elemen vektor U dibagi panjang vektor U
         for initRow in range(size):
             Q[initRow][mainCol] = U[initRow] / dU
-    eigenvector = np.dot(diffmat, Q)
-    return eigenvector, eigenvalue
+    return Q, R
+
+def getEigen(covmat, diffmat):
+    matrix = covmat
+    size = len(matrix)
+    eigenvector = np.identity(size)
+    eigenvalue = np.zeros(size)
+    for i in range(100):
+        Q, R = getQR(matrix)
+        matrix = R @ Q
+        eigenvector = eigenvector @ Q
+    for i in range(size):
+        for j in range(size):
+            if (i == j):
+                eigenvalue[i] = matrix[i][j]
+    eigenvector = diffmat @ eigenvector
+    i = eigenvalue.argsort()[::-1]
+    eigenvalue = eigenvalue[i]
+    eigenvector = eigenvector[:, i]
+    return eigenvector
+
+# def pickEigen(eigenvector):
+#     row = len(eigenvector)
+#     newCol = np.floor_divide(len(eigenvector), 2)
+#     neweigenvector = np.zeros((row,newCol))
+#     for i in range(newCol):
+#         neweigenvector[:,i] = eigenvector[:,i]
+#     return neweigenvector
 
 def CalculateEigenface(eigenvector):
     """ melakukan penyimpanan nilai eigen face kedalam databse menggunakan fungsi eigen vector
