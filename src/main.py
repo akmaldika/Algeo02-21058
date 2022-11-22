@@ -239,6 +239,7 @@ processing = False
 processing_video = False
 db_updated = False
 
+t1 = None
 eigenvector = None
 saved_pathdataset = None
 saved_totalImage = None
@@ -280,7 +281,7 @@ def select_dataset():
     if processing or processing_video:
         return
         
-    global pathdataset
+    global pathdataset, t1
 
     pathdataset = filedialog.askdirectory()
 
@@ -290,6 +291,27 @@ def select_dataset():
         entry_dataset.insert(0, os.path.basename(pathdataset))
     else:
         check_entry()
+
+    t1 = threading.Thread(target=update_dataset, daemon=True)
+    t1.start()
+
+def update_dataset():
+    global pathdataset, imageInput, eigenvector, saved_pathdataset, saved_totalImage, db_updated
+
+    if ((pathdataset != saved_pathdataset) or (saved_totalImage != totalImage(pathdataset))):
+        db_updated = False
+
+    if not db_updated:
+        update_status('Updating')
+        saved_pathdataset = pathdataset
+        saved_totalImage = totalImage(pathdataset)
+        updateDatabase(pathdataset)
+        selisih(pathdataset)
+        covmat, diffmat = getCovariance(pathdataset)
+        eigenvector, eigenvalue = getEigen(covmat, diffmat)
+        CalculateEigenface(eigenvector)
+        db_updated = True
+        update_status('Updated')
 
 def select_image():
     if processing or processing_video:
@@ -338,7 +360,6 @@ def start_process():
     processing = True
     threading.Thread(target=start, daemon=True).start()
     threading.Thread(target=stopwatch, daemon=True).start()
-    update_status('Processing')
 
 def stop_video():
     global processing_video, imageInput
@@ -363,6 +384,7 @@ def start_video():
     global video_capture, image, imageInput, processing_video, processing
 
     startstop_button.config(command = stop_video, image = stopvideo_img)
+    t1.join()
     update_status('Starting')
     video_capture.start()
     processing_video = True
@@ -373,7 +395,7 @@ def start_video():
         if not ret:
             break
         resized_image = resize(frame)
-        countdown = math.ceil(5 - (time.time() - start_time))
+        countdown = math.ceil(3 - (time.time() - start_time))
         if countdown:
             update_status('Capturing')
             cv2.putText(resized_image, str(countdown),
@@ -395,41 +417,44 @@ def start_video():
             threading.Thread(target = stopwatch, daemon = True).start()
             update_status('Processing')
             start()
-            time.sleep(5)
             start_time = time.time()
 
     video_capture.stop()
 
 def start():
-    global processing, saved_pathdataset, saved_totalImage, db_updated, eigenvector
-
-    if ((pathdataset != saved_pathdataset) and (saved_totalImage != totalImage(pathdataset))):
-        db_updated = False
-
-    if not db_updated:
-        saved_pathdataset = pathdataset
-        saved_totalImage = totalImage(pathdataset)
-        updateDatabase(pathdataset)
-        selisih(pathdataset)
-        covmat, diffmat = getCovariance(pathdataset)
-        eigenvector, eigenvalue = getEigen(covmat, diffmat)
-        CalculateEigenface(eigenvector)
-        db_updated = True
+    global processing, t1, pathdataset, imageInput, eigenvector, saved_pathdataset, saved_totalImage, db_updated
     
+    t1.join()
+
+    t1 = threading.Thread(target=update_dataset, daemon=True)
+    t1.start()
+    t1.join()
+
+    update_status('Processing')
+
     closest_image_path, distance = getNewEigenface(imageInput, pathdataset, eigenvector)
 
     print('Result:', closest_image_path)
     print('Distance:', distance, '\n')
-
+    
     processing = False
-    update_status('Done')
-    result_label.config(text = os.path.basename(closest_image_path))
 
-    image = Image.open(closest_image_path)
-    resized_image = image.resize((276, 276))
-    image_result = ImageTk.PhotoImage(resized_image)
-    right_img_label.configure(image = image_result)
-    right_img_label.image = image_result
+    if (closest_image_path == None):
+        result_label.config(text = 'Tidak ada gambar yang cocok')
+        right_img_bg = PhotoImage(file = 'src/UI/ImageBackground.png')
+        right_img_label.config(image = right_img_bg)
+        right_img_label.image = right_img_bg
+    else:
+        result_label.config(text = os.path.basename(closest_image_path))
+        image = cv2.imread(closest_image_path)
+        resized_image = resize(image)
+        image = cv2.cvtColor(resized_image, cv2.COLOR_BGR2RGB)
+        image = Image.fromarray(image)
+        image = ImageTk.PhotoImage(image)
+        right_img_label.configure(image = image)
+        right_img_label.image = image
+
+    update_status('Done')
 
 def close():
     global processing_video
